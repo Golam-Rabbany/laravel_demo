@@ -1,4 +1,5 @@
-@extends('layouts.app');
+
+@extends('dashboard.dashboard_master');
 
 
 @section('content')
@@ -37,7 +38,7 @@
                                     <td>{{$categories->relationToUser->name}}</td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <a href="#" class="btn btn-warning  btn-sm">Edit</a>
+                                            <a href="{{url('category/edit') }}/{{$categories->id}}" class="btn btn-warning  btn-sm">Edit</a>
                                             <a href="{{url('category/delete') }}/{{$categories->id}}" class="btn btn-danger btn-sm">Delete</a>
                                         </div>
                                     </td>

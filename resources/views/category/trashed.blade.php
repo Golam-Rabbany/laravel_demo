@@ -1,4 +1,4 @@
-@extends('layouts.app');
+@extends('dashboard.dashboard_master');
 
 
 @section('content')
@@ -8,25 +8,31 @@
 
         <div class="col-lg-8 m-auto">
             <div class="card">
+                @if(session('delDone'))
+                    <div class="alert alert-danger" role="alert">
+                        {{session('delDone')}}
+                    </div>
+                @endif
                 <div class="card-header">
                     <h5><b>Category List</b></h5>
                 </div>
                 <div class="car-body">
-                    <table class="table table-bordered table-responsive">
+                
+                    <table class="table table-bordered ">
                         <thead>
                             <th>serial</th>
                             <th>category name</th>
                             <th>action</th>
                         </thead>
                         <tbody>
-                            @forelse($all_trashed as $thashed_category)
+                            @forelse($all_trashed as $trashed_category)
                                 <tr>
-                                    <td>{{ $loop-> index+1}}</td>
-                                    <td>{{$thashed_category -> category_name}}</td>
+                                    <td>{{ $trashed_category -> id}}</td>
+                                    <td>{{$trashed_category -> category_name}}</td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <a href="#" class="btn btn-warning  btn-sm">Restore</a>
-                                            <a href="{{url('category/delete') }}/{{$thashed_category->id}}" class="btn btn-danger btn-sm">Delete</a>
+                                            <a href="{{ url('category/restore') }}/{{ $trashed_category->id }}" class="btn btn-warning  btn-sm">Restore</a>
+                                            <a href="{{ url('category/vanish') }}/{{ $trashed_category->id }}" class="btn btn-danger btn-sm">Delete</a>
                                         </div>
                                     </td>
                                 </tr>

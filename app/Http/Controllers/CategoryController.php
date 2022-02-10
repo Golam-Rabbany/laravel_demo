@@ -15,6 +15,11 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index()
     {
         return view('category.index',[
@@ -76,7 +81,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $single_info = Category::find($id);
+        return view('category.edit',compact('single_info'));
     }
 
     /**
@@ -86,9 +92,20 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $request -> validate([
+            'category_name' => 'required',
+        ],[
+            'category_name.required' => 'enter name',
+        ],
+    );
+
+        $category_name = Str::lower($request->category_name);
+        Category::findOrFail($request -> category_id)->update([
+            'category_name'=>$category_name,
+        ]);
+        return redirect('category/index');
     }
 
     /**
@@ -109,4 +126,25 @@ class CategoryController extends Controller
         $all_trashed = Category::onlyTrashed()->get();
         return view('category.trashed',compact('all_trashed'));
     }
+
+    public function restoreCategory($id){
+        Category::withTrashed()->where('id',$id)->restore();
+        return back();
+    }
+
+    public function vanishCategory($id){
+        Category::withTrashed()->where('id',$id)->forceDelete();
+        return back()->with('delDone', 'Delete successfully!!');
+    }
+
+    public function subcategory(Request $request){
+        $request->validate([
+        'category_id'=>'required',
+        'category_id'=>'required',
+        ]);
+}
+
+
+
+
 }

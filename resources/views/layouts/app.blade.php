@@ -33,6 +33,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
+                        @auth
                         <li class="nav-item">
                             <a href="{{ url('/role') }}" class="nav-link">User Role</a>
                         </li>
@@ -42,13 +43,13 @@
                                 Category
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="{{ url('/category/create') }}">Create Category</a></li>
                                 <li><a class="dropdown-item" href="{{ route('category.index') }}">View Category</a></li>
-                                <li><a class="dropdown-item" href="{{ route('category.trashed') }}" >Recycle Bin</a></li>
+                                <li><a class="dropdown-item" href="{{ url('/category/create') }}">Create Category</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Something new category</a></li>
+                                <li><a class="dropdown-item" href="{{ route('category.trashed') }}" >Recycle Category</a></li>
                             </ul>
                         </li>
+                        @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->
